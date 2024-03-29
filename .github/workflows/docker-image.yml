@@ -29,7 +29,7 @@ jobs:
       run: echo "::set-output name=value::$(date +%s)"
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag docker-img:${{ steps.timestamp.outputs.value }}
+      run: docker build . --file Dockerfile --tag pauljoy2000/docker-img:${{ steps.timestamp.outputs.value }}
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
