@@ -14,12 +14,25 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
         java-version: '17'
         distribution: 'temurin'
+
     - name: Build with Maven
       run: mvn clean package -DskipTests
+
+    - name: Determine image tag
+      id: timestamp
+      run: echo "::set-output name=value::$(date +%s)"
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag docker-img:${{ steps.timestamp.outputs.value }}
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Push Docker image to Docker Hub
+      run: docker push docker-img:${{ steps.timestamp.outputs.value }}
