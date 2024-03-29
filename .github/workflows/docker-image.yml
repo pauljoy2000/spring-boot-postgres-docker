@@ -32,7 +32,7 @@ jobs:
       run: docker build . --file Dockerfile --tag docker-img:${{ steps.timestamp.outputs.value }}
 
     - name: Log in to Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin --verbose
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Push Docker image to Docker Hub
       run: docker push docker-img:${{ steps.timestamp.outputs.value }}
