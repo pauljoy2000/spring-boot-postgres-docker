@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:16.2
+    ports:
+      - 5432:5432
+    volumes:
+      - D:\Enhance\docker_postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=docker_db
